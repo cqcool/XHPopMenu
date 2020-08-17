@@ -88,6 +88,18 @@
 }
 
 - (IBAction)onButtonClick:(UIButton *)sender {
+    __block UIColor *bgColor = nil;
+    if (@available(iOS 13.0, *)) {
+        bgColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
+            if ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
+                return UIColor.whiteColor;
+            }
+            else {
+                return UIColor.redColor;
+            }
+        }];
+    }
+    
     XHPopMenuConfiguration *options = [XHPopMenuConfiguration defaultConfiguration];
     options.style               = XHPopMenuAnimationStyleScale;
     options.menuMaxHeight       = 200; // 菜单最大高度
@@ -106,7 +118,7 @@
     options.separatorHeight     = 1.0 / [UIScreen mainScreen].scale;//分割线高度
     options.titleColor          = [UIColor redColor];//menuItem字体颜色
     options.separatorColor      = [UIColor whiteColor];//分割线颜色
-    options.menuBackgroundColor = [UIColor colorWithWhite:0.8 alpha:1],//菜单的底色
+    options.menuBackgroundColor = bgColor,//菜单的底色
     options.selectedColor       = [UIColor grayColor];// menuItem选中颜色
     
     // 设置menu距离屏幕左右两边的最小间距

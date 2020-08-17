@@ -387,6 +387,13 @@ static const CGFloat kXHDefaultAnimateDuration = 0.15;
         }
     }
 }
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    if (@available(iOS 13.0, *)) {
+        _triangleLayer.fillColor = _configuration.menuBackgroundColor.CGColor;
+        _triangleLayer.strokeColor = _configuration.menuBackgroundColor.CGColor;
+    }
+}
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
